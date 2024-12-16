@@ -46,7 +46,7 @@ class L_model():
             parameters = {}
             L = len(layersdim)
             for l in range(1,L):
-                parameters['w'+str(l)] = np.random.randn(layersdim[l],layersdim[l-1])*0.01
+                parameters['w'+str(l)] = np.random.randn(layersdim[l],layersdim[l-1])*np.sqrt(2/layersdim[l-1])
                 parameters['b'+str(l)] = np.zeros((layersdim[l],1))
             return parameters
     def L_model_backward(self,Y, parameters, cache):
