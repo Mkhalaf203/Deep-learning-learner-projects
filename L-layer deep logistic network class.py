@@ -134,13 +134,13 @@ X = data.data  # Features
 Y = data.target  # Labels (0 or 1)
 
 # Preprocess the data
-scaler = StandardScaler()  # Standardize features (zero mean, unit variance)
-X = scaler.fit_transform(X)  # Scale features
-Y = Y.reshape(1, -1)         # Reshape Y to (1, m)
-X = X.T                      # Transpose X to (n_x, m)
+scaler = StandardScaler()  
+X = scaler.fit_transform(X)  
+Y = Y.reshape(1, -1)         
+X = X.T                      
 X_train, X_test, Y_train, Y_test = train_test_split(X.T, Y.T, test_size=0.2, random_state=42)
-X_train, X_test = X_train.T, X_test.T  # Transpose back to (n_x, m)
-Y_train, Y_test = Y_train.T, Y_test.T  # Transpose back to (1, m)
+X_train, X_test = X_train.T, X_test.T  
+Y_train, Y_test = Y_train.T, Y_test.T  
 
 
 # Print shapes for verification
