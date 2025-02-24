@@ -49,9 +49,9 @@ class L_model():
                 parameters['w'+str(l)] = np.random.randn(layersdim[l],layersdim[l-1])*np.sqrt(2/layersdim[l-1])
                 parameters['b'+str(l)] = np.zeros((layersdim[l],1))
             return parameters
-    def L_model_backward(self,Y, parameters, cache):
+    def L_model_backward(self,Y, cache):
         grads = {}
-        L = len(parameters) // 2  
+        L = len(self.parameters) // 2  
         AL = cache['a' + str(L)]  
         Y = Y.reshape(AL.shape)  
         m = Y.shape[1]
@@ -65,7 +65,7 @@ class L_model():
 
         # Backpropagate for the hidden layers (1 to L-1)
         for l in reversed(range(1, L)):  
-            dz = np.dot(parameters["w" + str(l + 1)].T, dzL) * self.relu_derivative(cache["z" + str(l)])
+            dz = np.dot(self.parameters["w" + str(l + 1)].T, dzL) * self.relu_derivative(cache["z" + str(l)])
             grads["dw" + str(l)] = (1 / m) * np.dot(dz, cache["a" + str(l - 1)].T)  # Gradients of W for hidden layers
             grads["db" + str(l)] = (1 / m) * np.sum(dz, axis=1, keepdims=True)
             dzL = dz
@@ -112,7 +112,7 @@ class L_model():
         
         
             A,cache = self.L_model_forward(self.X)
-            self.L_model_backward(self.Y,parameters,cache)
+            self.L_model_backward(self.Y,cache)
             parameters = self.update_parameters(alpha)
             if i%100 == 0 :
                 c =self.compute_cost(self.Y,A)
