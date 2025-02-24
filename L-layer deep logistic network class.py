@@ -51,9 +51,9 @@ class L_model():
             return parameters
     def L_model_backward(self,Y, parameters, cache):
         grads = {}
-        L = len(parameters) // 2  # Number of layers in the neural network
-        AL = cache['a' + str(L)]  # The output of the final layer
-        Y = Y.reshape(AL.shape)  # Reshape Y to match the output of the last layer
+        L = len(parameters) // 2  
+        AL = cache['a' + str(L)]  
+        Y = Y.reshape(AL.shape)  
         m = Y.shape[1]
 
         # Sigmoid backpropagation (output layer)
@@ -63,7 +63,7 @@ class L_model():
         grads["db" + str(L)] = (1 / m) * np.sum(dzL, axis=1, keepdims=True)
 
         # Backpropagate for the hidden layers (1 to L-1)
-        for l in reversed(range(1, L)):  # Start from L-1 down to 1
+        for l in reversed(range(1, L)):  
             dz = np.dot(parameters["w" + str(l + 1)].T, dzL) * self.relu_derivative(cache["z" + str(l)])
             grads["dw" + str(l)] = (1 / m) * np.dot(dz, cache["a" + str(l - 1)].T)  # Gradients of W for hidden layers
             grads["db" + str(l)] = (1 / m) * np.sum(dz, axis=1, keepdims=True)
