@@ -55,9 +55,10 @@ class L_model():
         AL = cache['a' + str(L)]  
         Y = Y.reshape(AL.shape)  
         m = Y.shape[1]
+        epsi = 1e-8
 
         # Sigmoid backpropagation (output layer)
-        dAL = - (np.divide(Y, AL) - np.divide(1 - Y, 1 - AL))
+        dAL = - (np.divide(Y, AL+epsi) - np.divide(1 - Y, 1 - AL+epsi))
         dzL = dAL * self.sigmoid_derivative(AL)
         grads["dw" + str(L)] = (1 / m) * np.dot(dzL, cache["a" + str(L-1)].T)  # Gradients of W for the last layer
         grads["db" + str(L)] = (1 / m) * np.sum(dzL, axis=1, keepdims=True)
@@ -74,7 +75,8 @@ class L_model():
     def compute_cost(self,Y,AL):
     
         m = Y.shape[1]
-        cost = - (1 / m) * np.sum(Y * np.log(AL) + (1 - Y) * np.log(1 - AL))
+        epsi = 1e-8
+        cost = - (1 / m) * np.sum(Y * np.log(AL+epsi)) + (1 - Y) * np.log(1 - AL+epsi)
         return cost
     
     def update_parameters(self,alpha):
