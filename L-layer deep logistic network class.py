@@ -76,7 +76,7 @@ class L_model():
     
         m = Y.shape[1]
         epsi = 1e-8
-        cost = - (1 / m) * np.sum(Y * np.log(AL+epsi)) + (1 - Y) * np.log(1 - AL+epsi)
+        cost = - (1 / m) * np.sum(Y * np.log(AL+epsi) + (1 - Y) * np.log(1 - AL+epsi))
         return cost
     
     def update_parameters(self,alpha):
@@ -105,7 +105,7 @@ class L_model():
     
         return predictions
     def build(self,alpha,iterations):
-        parameters = self.initialize_parameters_deep(self.layers)
+        
         costs= []
         for i in range(iterations):
 
@@ -159,5 +159,4 @@ test, accuracytest = logi.predict(X_test,Y_test)
 
 print(f"train set accuracy {accuracytrain}")
 print(f"test set accuracy {accuracytest}")
-
 
